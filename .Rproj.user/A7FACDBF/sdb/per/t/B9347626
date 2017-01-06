@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "## Pull Data from google Sheet\n\nrequire(RCurl)\nfileUrl <- \"https://docs.google.com/spreadsheets/d/1RTRABrYQhyyfj_Dr3bkmNSnxmM7jbXIMgrI8eOa7Avk/export?format=csv\"\nfileCSV <- getURL(fileUrl,.opts=list(ssl.verifypeer=FALSE))\nfileCSVDF <-  read.csv(textConnection(fileCSV))\ndf <- fileCSVDF[,c(1:5)]\n\n## Data Manipulation\ndf1 <- aggregate(df$miles, by=list(person=df$person), FUN=sum)\ncolnames(df1) <- c(\"person\",\"miles\")\n\n## Plot Data\nrequire(ggplot2)\np <- ggplot(df, aes(time_stamp, miles, colour=person)) + geom_point(size=2) + geom_line(aes(colour=person, group=person), size=1) + labs(list(title = \"Time Series of Running Data\", x = \"Date\", y = \"Total Miles Ran\"))\np + scale_y_continuous(expand = c(0, .5))\n\n\nggplot(data = df1, aes(person, miles, fill=person)) + geom_bar(stat = \"identity\") + geom_text(aes(label=df1$miles), vjust=2, size=4) + labs(list(title = \"Total Miles Ran Per Person in 2017\", x = \"Person\", y = \"Total Miles Ran\"))\n",
+    "created" : 1483652097325.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "960091955",
+    "id" : "B9347626",
+    "lastKnownWriteTime" : 1483716196,
+    "last_content_update" : 1483716196623,
+    "path" : "~/GitHub/Running_App/Vizualize progress.R",
+    "project_path" : "Vizualize progress.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
