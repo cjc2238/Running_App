@@ -17,5 +17,5 @@ time_series <- p + scale_y_continuous(expand = c(0, .5))
 print(time_series)
 
 
-totals <- ggplot(data = df1, aes(person, miles, fill=person)) + geom_bar(stat = "identity") + geom_text(aes(label=df1$miles), vjust=2, size=4) + labs(list(title = "Total Miles Ran Per Person in 2017", x = "Person", y = "Total Distance Ran (miles)"))
+totals <- ggplot(data = df1, aes(person, miles, fill=person)) + geom_bar(stat = "identity") + geom_text(aes(label=df1$miles), vjust=2, size=4) + labs(list(title = "Total Miles Accomplished Per Person in 2017", x = "Person", y = "Total Distance Ran (miles)"))
 print(totals)
