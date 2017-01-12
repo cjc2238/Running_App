@@ -25,13 +25,23 @@ colnames(df1) <- c("person","miles")
 df2 <- aggregate(df$miles, by=list(person=df$person, day=df$yday), FUN=sum)
 colnames(df2) <- c("person","day","miles")
 
+df3 <- aggregate(df$miles, by=list(yday=df$yday), FUN=sum)
+colnames(df3) <- c("day","miles")
+
 ## Plot Data
 require(ggplot2)
 p <- ggplot(df2, aes(day, miles, colour=person)) + geom_point(size=2) + geom_line(aes(colour=person, group=person), size=1) + labs(list(title = "Time Series of Running Data", x = "Day of Year", y = "Total Miles Ran"))
-time_series <- p + scale_y_continuous(expand = c(0, .5))
-print(time_series)
+person_time_series <- p + scale_y_continuous(expand = c(0, .5))
 
+print(person_time_series)
+
+p <- ggplot(df3, aes(day, miles, label=miles)) + geom_point(size=2) + geom_line(size=1) + labs(list(title = "Time Series of Running Data", x = "Day of Year", y = "Total Miles Ran")) + geom_smooth(size = .5) + geom_text(aes(label=miles),hjust=-0, vjust=-.5)
+
+total_time_series <- p + geom_hline(yintercept = 5.526, colour = "red", size = .8, linetype = "dotdash") + geom_hline(yintercept = mean(df3$miles), colour = "dark green", size = .8, linetype = "dotted") 
+
+print(total_time_series)
 
 totals <- ggplot(data = df1, aes(person, miles, fill=person)) + geom_bar(stat = "identity") + geom_text(aes(label=df1$miles), vjust=2, size=4) + labs(list(title = "Total Miles Accomplished Per Person in 2017", x = "Person", y = "Total Distance Ran (miles)"))
 print(totals)
+
 
