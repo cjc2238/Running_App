@@ -35,13 +35,15 @@ person_time_series <- p + scale_y_continuous(expand = c(0, .5))
 
 print(person_time_series)
 
-p <- ggplot(df3, aes(day, miles, label=miles)) + geom_point(size=2) + geom_line(size=1) + labs(list(title = "Time Series of Running Data", x = "Day of Year", y = "Total Miles Ran")) + geom_smooth(size = .5) + geom_text(aes(label=miles),hjust=-0, vjust=-.5)
+p <- ggplot(df3, aes(day, miles, label=miles)) + geom_point(size=2) + geom_line(size=1) + labs(list(title = "Time Series of Running Data", x = "Day of Year", y = "Total Miles Ran")) + geom_text(aes(label=miles),hjust=-0, vjust=-.5)
 
-total_time_series <- p + geom_hline(yintercept = 5.526, colour = "red", size = .8, linetype = "dotdash") + geom_hline(yintercept = mean(df3$miles), colour = "dark green", size = .8, linetype = "dotted") 
+total_time_series <- p + geom_hline(yintercept = 5.526, colour = "red", size = .8, linetype = "dotted") + annotate("text", x = 1.55, y = 6, label = "Min Needed to", size = 3, colour = "red") + annotate("text", x = 1.55, y = 5.8, label = "Meet Year Goal", size = 3, colour = "red") + theme_bw()
 
 print(total_time_series)
 
-totals <- ggplot(data = df1, aes(person, miles, fill=person)) + geom_bar(stat = "identity") + geom_text(aes(label=df1$miles), vjust=2, size=4) + labs(list(title = "Total Miles Accomplished Per Person in 2017", x = "Person", y = "Total Distance Ran (miles)"))
+totals <- ggplot(data = df1, aes(person, miles, fill=person)) + geom_bar(stat = "identity") + geom_text(aes(label=df1$miles), vjust=2, size=4) + labs(list(title = "Total Miles Accomplished Per Person in 2017", x = "Person", y = "Total Distance Ran (miles)")) + theme_bw()
 print(totals)
 
+require(gridExtra)
 
+grid.arrange(total_time_series, totals, ncol=2)
