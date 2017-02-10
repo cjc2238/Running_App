@@ -12,9 +12,9 @@ require(lubridate)
 df$time_stamp <- as.POSIXct(df$time_stamp, format='%m/%d/%Y %H:%M:%OS')
 df$run_time <- as.POSIXct(df$run_time, format='%H:%M:%OS')
 df$run_time <- format(df$run_time, format='%H:%M:%OS')
-df$week <- format(x, format='%W')
-df$yday <- yday(x)
-df$year <- year(x)
+df$week <- format(df$time_stamp, format='%W')
+df$yday <- yday(df$time_stamp)
+df$year <- year(df$time_stamp)
 df$week[df$week == '00'] <- '01'
 df$location[df$location == "Hell (treadmill)"] <- 'Treadmill'
 
