@@ -11,7 +11,7 @@ df <- fileCSVDF[,c(1:5)]
 require(lubridate)
 df$time_stamp <- as.POSIXct(df$time_stamp, format='%m/%d/%Y %H:%M:%OS')
 df$run_time <- as.POSIXct(df$run_time, format='%H:%M:%OS')
-df$run_time <- format(df$run_time, format='%H:%M:%OS')
+df$run_time2 <- format(df$run_time, format='%H:%M:%OS')
 df$week <- format(df$time_stamp, format='%W')
 df$yday <- yday(df$time_stamp)
 df$year <- year(df$time_stamp)
@@ -56,6 +56,7 @@ print(totals)
 p <- ggplot(df, aes(x=week, y=miles, col = location, fill = location)) + geom_bar(stat="identity") + theme(axis.text.x=element_text(angle=90)) + theme_light() + facet_wrap(~ person) + labs(list(title = "Total Miles Ran Per Week By Location and Person", x = "Week of Year", y = "Total Miles Accomplished"))
 
 scatter <- p + theme(plot.title = element_text(hjust = 0.5))
+print(scatter)
 
 require(gridExtra)
 
