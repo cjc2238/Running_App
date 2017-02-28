@@ -214,3 +214,4 @@ predict(model2, data.frame(week = 11, miles = 3.2))
 require(gridExtra)
 
 grid.arrange(day_reg, week_reg, ncol=1)
+

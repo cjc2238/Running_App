@@ -1,4 +1,5 @@
 ## Pull Data from google Sheet
+source('~/GitHub/Running_App/predict_total_distance.R')
 
 require(RCurl)
 fileUrl <- "https://docs.google.com/spreadsheets/d/1RTRABrYQhyyfj_Dr3bkmNSnxmM7jbXIMgrI8eOa7Avk/export?format=csv"
@@ -44,9 +45,9 @@ person_time_series <- p + scale_y_continuous(expand = c(0, .5)) + geom_hline(yin
 
 print(person_time_series)
 
-p <- ggplot(df3, aes(day, miles, label=miles))  + labs(list(title = "Total Miles Accomplished by Everyone (Per Day)", x = "Day of Year", y = "Total Miles Accomplished")) + geom_area(fill="#838B83") 
+p <- ggplot(df3, aes(day, miles, label=miles))  + labs(list(title = "Total Miles Accomplished by Everyone (Per Day)", x = "Day of Year", y = "Total Miles Accomplished"))  
 
-total_time_series <- p + geom_hline(yintercept = 5.526, colour = "black", size = .8, linetype = "dotted") + annotate("text", x = 21, y = 5.9, label = "Min Needed to meet year goal", size = 3, colour = "black") + theme_light() + theme(plot.title = element_text(hjust = 0.5)) + geom_point(color="black") + geom_text(aes(label=miles),hjust=-.3, vjust=0, color = "black") + geom_smooth()
+total_time_series <- p + geom_hline(yintercept = 5.526, colour = "black", size = .8, linetype = "dotted") + annotate("text", x = 21, y = 5.9, label = "Min Needed to meet year goal", size = 3, colour = "black") + theme_light() + theme(plot.title = element_text(hjust = 0.5)) + geom_point(color="black", size = 1) + geom_text(aes(label=miles),hjust=-.3, vjust=0, color = "black", size =3.5) + geom_smooth()
 
 print(total_time_series)
 
@@ -60,5 +61,6 @@ print(scatter)
 
 require(gridExtra)
 
-grid.arrange(total_time_series, person_time_series, totals, scatter, ncol=2)
+one <- grid.arrange(person_time_series, totals, predicted_reg, total_reg, ncol=2)
+grid.arrange(one, total_time_series, ncol=1)
 
