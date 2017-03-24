@@ -78,7 +78,7 @@ total_reg
 
 # create data frame to predict 
 
-year_df <- data.frame(day = 53:365)
+year_df <- data.frame(day = 83:365)
 
 year_df$cumsum <- predict(model1, year_df)
 
@@ -88,7 +88,7 @@ df4 <- rbind(df3, year_df)
 
 predicted_total <- ggplot(year_df, aes(day, cumsum)) + geom_line() + geom_smooth(method = "lm", col = "blue") + labs(title = "Predicted Year End Distance", x = "Day of Year", y = "Total Distance Completed in Miles") + geom_hline(yintercept = 2017, colour = "red", size = .8, linetype = "dotted") + annotate("text", x = 70, y = 1875, label = "2017 Miles", size = 4, colour = "black")
 
-predicted_reg <- predicted_total + theme_light() + theme(plot.title = element_text(hjust = 0.5)) + annotate("text", x = 360, y = 1250, label = "1455.6
+predicted_reg <- predicted_total + theme_light() + theme(plot.title = element_text(hjust = 0.5)) + annotate("text", x = 360, y = 1250, label = "1458.24
 Miles", size = 4, colour = "blue")
 
 require(gridExtra)

@@ -54,13 +54,18 @@ print(total_time_series)
 totals <- ggplot(data = df1, aes(person, miles, fill=person)) + geom_bar(stat = "identity") + geom_text(aes(label=df1$miles), vjust=2, size=4) + labs(list(title = "Total Miles Accomplished Per Person", x = "Person", y = "Total Distance Accomplished (miles)")) + theme_light() + theme(plot.title = element_text(hjust = 0.5))
 print(totals)
 
-p <- ggplot(df, aes(x=week, y=miles, col = location, fill = location)) + geom_bar(stat="identity") + theme(axis.text.x=element_text(angle=90)) + theme_light() + facet_wrap(~ person) + labs(list(title = "Total Miles Ran Per Week By Location and Person", x = "Week of Year", y = "Total Miles Accomplished"))
+p <- ggplot(df, aes(x=week, y=miles, col = location, fill = location)) + geom_bar(stat="identity") + theme(axis.text.x=element_text(angle=90)) + theme_light() + facet_wrap(~ person)+ labs(list(title = "Total Miles Ran Per Week By Location and Person", x = "Week of Year", y = "Total Miles Accomplished"))
 
-scatter <- p + theme(plot.title = element_text(hjust = 0.5))
+scatter <- p + theme(plot.title = element_text(hjust = 0.5)) 
 print(scatter)
 
 require(gridExtra)
 
 one <- grid.arrange(person_time_series, totals, predicted_reg, total_reg, ncol=2)
 grid.arrange(one, total_time_series, ncol=1)
+
+grid.arrange(person_time_series, totals, total_time_series, ncol=1)
+
+two <- grid.arrange(predicted_reg, totals, ncol=2)
+grid.arrange(totals, person_time_series, ncol=2)
 
