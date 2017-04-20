@@ -39,16 +39,17 @@ server <- function(input, output) {
                                     df$week <- format(x, format='%W')
                                     df$yday <- yday(x)
                                     df$week[df$week == '00'] <- '01'
+                                    df$location[df$location == "Hell (treadmill)"] <- 'Treadmill'
                                     df$person <- as.character(df$person)
                                     df$week <- as.numeric(df$week)
                                     df1 = subset(df, df$person %in% input$plot)
                                                                                 },
                                   
-  aes(week, miles, color=location, fill=location)) +
+  aes(week, miles, fill=location)) +  scale_fill_manual(values=c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")) +
     stat_summary(fun.y = sum, geom = "bar", position = "identity",  inherit.aes = TRUE) + 
-    labs(list(x = {csvFileName <- paste("Time in ","Weeks",sep="")}, y = "Miles"))  +
+    labs(list(x = {csvFileName <- paste("Time in ","Weeks",sep="")}, y = "Total Miles Logged"))  +
     ggtitle("Distance Logged") +
-    theme(plot.title = element_text(hjust = 0.5))) 
+    theme(plot.title = element_text(hjust = 0.5)) + theme_bw()) 
     
 }
 
