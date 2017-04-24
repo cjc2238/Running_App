@@ -17,7 +17,9 @@ u <- shinyUI(fluidPage(
     
     column(2,
            wellPanel(
-             selectInput("plot","Select the Plot",c("Amy","Chad","Lauren","Naresh"), selected = "Amy", selectize = TRUE))       
+             selectInput("plot","Select the Plot",c("Amy","Chad","Lauren","Naresh"), selected = "Amy", selectize = TRUE),
+             sliderInput("point", "Over Plotting Assistance", min=0, max=5, value = 1),
+             sliderInput("span", "Over Plotting Assistance", min=.3, max=5, value = .3, step = .1))
     ),
     
     column(12,
@@ -54,7 +56,7 @@ s <- shinyServer(function(input, output)
                        FUN=sum, na.rm=TRUE)
       colnames(df2) <- c("week","miles")
       df3 <<- as.data.frame(df2)},
-      aes(week, miles)) + geom_line(color="slategray3") + geom_point(size=.75, color="slategray4") +
+      aes(week, miles)) + geom_smooth(color="slategray3", size=input$point, span=input$span, se = TRUE) + geom_point(size=input$point, color="slategray4") +
         geom_hline(yintercept = sum(df3$miles)/tail(df$week, n=1), color="indianred3", linetype = "dashed") +
         labs(list( x = "Week of Year Beginning Jan 01 2017", y = "Miles Logged"))  +
         annotate("text", x = 5, y = sum(df3$miles)/tail(df$week, n=1)+sum(df3$miles)/tail(df$week, n=1)*.05, label = {csvFileName <- paste(round(sum(df3$miles)/tail(df$week, n=1),2)," Average",sep="")}, size = 5.5, colour = "indianred3") +
