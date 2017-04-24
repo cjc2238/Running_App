@@ -17,8 +17,7 @@ u <- shinyUI(fluidPage(
     
     column(2,
            wellPanel(
-             selectInput("plot","Select the Plot",c("Amy","Chad","Lauren","Naresh"), selected = "Amy", selectize = TRUE),
-             submitButton(text = "Submit"))       
+             selectInput("plot","Select the Plot",c("Amy","Chad","Lauren","Naresh"), selected = "Amy", selectize = TRUE))       
     ),
     
     column(12,

@@ -3,9 +3,9 @@ title: Running_App
 account: learninganalytics
 server: shinyapps.io
 appId: 173977
-bundleId: 801790
+bundleId: 801922
 url: https://learninganalytics.shinyapps.io/Running_App/
-when: 1493056068.62048
+when: 1493061686.25784
 asMultiple: FALSE
 asStatic: FALSE
 ignoredFiles: .gitattributes|.RData|03_24_2017.png|April_14_2017.png|chad_regression_models.R|predict_total_distance.R|Predicted Total as of Feb 23.png|Running_time_series.png|totals.png|Vizualize progress.R|2017/app.R|Test/app.R
