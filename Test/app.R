@@ -1,50 +1,47 @@
+library(shiny)
 library(ggplot2)
-library(Cairo)   # For nicer ggplot2 output when deployed on Linux
+library(gridExtra)
 
-# We'll use a subset of the mtcars data set, with fewer columns
-# so that it prints nicely
-mtcars2 <- mtcars[, c("mpg", "cyl", "disp", "hp", "wt", "am", "gear")]
+u <- shinyUI(fluidPage(
+  titlePanel("title panel"),
+  sidebarLayout(position = "left",
+                sidebarPanel("sidebar panel",
+                             checkboxInput("donum1", "Make #1 plot", value = T),
+                             checkboxInput("donum2", "Make #2 plot", value = F),
+                             checkboxInput("donum3", "Make #3 plot", value = F),
+                             sliderInput("wt1","Weight 1",min=1,max=10,value=1),
+                             sliderInput("wt2","Weight 2",min=1,max=10,value=1),
+                             sliderInput("wt3","Weight 3",min=1,max=10,value=1)
+                ),
+                mainPanel("main panel",
+                          column(6,plotOutput(outputId="plotgraph", width="500px",height="400px"))
+                ))))
 
-
-ui <- fluidPage(
-  fluidRow(
-    column(width = 4,
-           plotOutput("plot1", height = 300,
-                      # Equivalent to: click = clickOpts(id = "plot_click")
-                      click = "plot1_click",
-                      brush = brushOpts(
-                        id = "plot1_brush"
-                      )
-           )
-    )
-  ),
-  fluidRow(
-    column(width = 6,
-           h4("Points near click"),
-           verbatimTextOutput("click_info")
-    ),
-    column(width = 6,
-           h4("Brushed points"),
-           verbatimTextOutput("brush_info")
-    )
-  )
-)
-
-server <- function(input, output) {
-  output$plot1 <- renderPlot({
-    ggplot(mtcars2, aes(wt, mpg)) + geom_point()
+s <- shinyServer(function(input, output) 
+{
+  set.seed(123)
+  pt1 <- reactive({
+    if (!input$donum1) return(NULL)
+    qplot(rnorm(500),fill=I("red"),binwidth=0.2,main="plotgraph1")
   })
-  
-  output$click_info <- renderPrint({
-    # Because it's a ggplot2, we don't need to supply xvar or yvar; if this
-    # were a base graphics plot, we'd need those.
-    nearPoints(mtcars2, input$plot1_click, addDist = TRUE)
+  pt2 <- reactive({
+    if (!input$donum2) return(NULL)
+    qplot(rnorm(500),fill=I("blue"),binwidth=0.2,main="plotgraph2")
   })
-  
-  output$brush_info <- renderPrint({
-    brushedPoints(mtcars2, input$plot1_brush)
+  pt3 <- reactive({
+    if (!input$donum3) return(NULL)
+    qplot(rnorm(500),fill=I("green"),binwidth=0.2,main="plotgraph3")
   })
-}
-
-shinyApp(ui, server)
-
+  output$plotgraph = renderPlot({
+    ptlist <- list(pt1(),pt2(),pt3())
+    wtlist <- c(input$wt1,input$wt2,input$wt3)
+    # remove the null plots from ptlist and wtlist
+    to_delete <- !sapply(ptlist,is.null)
+    ptlist <- ptlist[to_delete] 
+    wtlist <- wtlist[to_delete]
+    if (length(ptlist)==0) return(NULL)
+    
+    grid.arrange(grobs=ptlist,widths=wtlist,ncol=length(ptlist))
+  })
+})
+shinyApp(u,s)
