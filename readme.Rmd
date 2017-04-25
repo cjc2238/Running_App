@@ -18,7 +18,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r}
 u <- shinyUI(fluidPage(
   
-  titlePanel("Hello Shiny!"),
+  titlePanel("2017 Mile Challenge!"),
   
   fluidRow(
     
