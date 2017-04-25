@@ -11,7 +11,7 @@ library(gridExtra)
 #####################
 u <- shinyUI(fluidPage(
   
-  titlePanel("Hello Shiny!"),
+  titlePanel("2017 Running Challenge!"),
   
   fluidRow(
     

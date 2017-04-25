@@ -1,5 +1,4 @@
-## Pull Data from google Sheet
-source('~/GitHub/Running_App/predict_total_distance.R')
+
 
 require(RCurl)
 fileUrl <- "https://docs.google.com/spreadsheets/d/1RTRABrYQhyyfj_Dr3bkmNSnxmM7jbXIMgrI8eOa7Avk/export?format=csv"
