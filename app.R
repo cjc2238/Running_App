@@ -11,7 +11,7 @@ library(gridExtra)
 #####################
 u <- shinyUI(fluidPage(
   
-  titlePanel("2017 Running Challenge!"),
+  titlePanel("2017 Mile Challenge!"),
   
   fluidRow(
     
@@ -79,7 +79,7 @@ s <- shinyServer(function(input, output)
     df2 <- aggregate(df$miles, by=list(df$person), 
                      FUN=sum, na.rm=TRUE)
     colnames(df2) <- c("person","miles")
-    df3 <<- as.data.frame(df2)},aes(person, miles, fill=person, label=miles)) + geom_bar(stat = "identity") + labs(list( x = "Person", y = "Miles Logged", fill = "")) + scale_fill_brewer(palette="Set3") + ggtitle(paste("Miles Logged Per Person \n Total Miles completed = ", sum(df$miles), sep = "")) + theme_minimal() + geom_text(aes(label=miles), position=position_dodge(width=0.9), vjust=-0.25)
+    df3 <- as.data.frame(df2)},aes(x = reorder(person, -miles), miles, fill=person, label=miles)) + geom_bar(stat = "identity") + labs(list( x = "Person", y = "Miles Logged", fill = "")) + scale_fill_brewer(palette="Set3") + ggtitle(paste("Miles Logged Per Person \n Total Miles completed = ", sum(df$miles), sep = "")) + theme_minimal() + geom_text(aes(label=miles), position=position_dodge(width=0.9), vjust=-0.25)
     pt3 + theme(legend.position = "NA") + theme(plot.title = element_text(hjust = .5)) 
     },
     {
